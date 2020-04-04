@@ -1,5 +1,6 @@
 # Snake
-This game was created for a programming course in 2015.
+This game was originally created for a programming course in 2015.
 
 ## Requirements
-* Python 2.7
+* Python 3
+* Pillow (`pip install Pillow`)
