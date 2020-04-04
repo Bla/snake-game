@@ -27,11 +27,11 @@ Improvements:
 @author: Gerben Rozie
 @author: Sebastian Osterlund
 '''
-import Tkinter as _tk
-import Dialog as _Dialog
-import tkFileDialog as _tkFileDialog
-import tkMessageBox as _tkMessageBox
-import Queue as _Queue
+import tkinter as _tk
+import tkinter.dialog as _Dialog
+import tkinter.filedialog as _tkFileDialog
+import tkinter.messagebox as _tkMessageBox
+import queue as _Queue
 import threading as _threading
 import time as _time
 import os as _os
@@ -48,11 +48,11 @@ try:
         plt.switch_backend('QT4Agg') # Use QT4 for linux. Bug in TK.
     have_mpl = True
 except ImportError:
-    print "Could not import matplotlib. HouseMarketUserInterface and StockMarketUserInterface have been disabled."
+    print("Could not import matplotlib. HouseMarketUserInterface and StockMarketUserInterface have been disabled.")
 import time as _time
 import datetime as _datetime
 import pickle as _pickle
-import urllib2, urllib, json 
+import urllib, json 
 
 YAHOO_URL = 'https://query.yahooapis.com/v1/public/yql'
 
@@ -61,8 +61,8 @@ try:
     from PIL import Image as _Image, ImageTk as _ImageTk
     have_pil = True
 except ImportError:
-    print "Could not import the Python Imaging Library (PIL)."
-    print "Usage of OthelloReplay-, Snake- and LifeUserInterface are disabled." 
+    print("Could not import the Python Imaging Library (PIL).")
+    print("Usage of OthelloReplay-, Snake- and LifeUserInterface are disabled.")
 	
 class _IPyException(Exception):
     def __init__(self, value):
@@ -85,7 +85,7 @@ def _verify_float(value_var, string_var, minimum=None, maximum=None):
     _verify_input(value_var, string_var, minimum, maximum)
 
 def _verify_str(value_var, string_var):
-    if not isinstance(value_var, basestring):
+    if not isinstance(value_var, str):
         value = "%s is not a string for %s, got %s" % (value_var, string_var, str(type(value_var))[1:-1])
         raise _IPyException(value)
 
@@ -175,7 +175,7 @@ if _sys.platform == 'darwin':
             root = _tk.Toplevel(mainroot)
             root.withdraw()
             self.f = _tkFileDialog.askopenfilename(parent=root)
-            if self.f is not '':
+            if self.f != '':
                 _sys.stdin = file(self.f)
             root.destroy()
     
@@ -1617,8 +1617,8 @@ else:
         from PIL import Image as _Image, ImageTk as _ImageTk
         have_pil = True
     except ImportError:
-        print "Could not import the Python Imaging Library (PIL)."
-        print "Usage of OthelloReplay-, Snake- and LifeUserInterface are disabled." 
+        print("Could not import the Python Imaging Library (PIL).")
+        print("Usage of OthelloReplay-, Snake- and LifeUserInterface are disabled.")
     
     _add_interface_queue = _Queue.Queue(maxsize=0)
     #boolean did not work here in conjuction with using the 'global' prefix inside functions, hence queue
@@ -1683,7 +1683,7 @@ else:
                 _active_interface_list.append(self)
                 self.have_root = True
             self.f = _tkFileDialog.askopenfilename(parent=self.root)
-            if self.f is not '':
+            if self.f != '':
                 _sys.stdin = file(self.f)
             return self
         def poll(self):
@@ -3240,8 +3240,8 @@ class StockMarketUserInterface(object):
 
         data = urllib.urlencode(req)
         whole_url = YAHOO_URL + '?' + data
-        request = urllib2.Request(whole_url) 
-        handler = urllib2.urlopen(request)
+        request = urllib.request(whole_url) 
+        handler = urllib.urlopen(request)
         response = json.loads(handler.read())
         return response
 
